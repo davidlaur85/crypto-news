@@ -1,0 +1,82 @@
+body {
+    font-size: 15px;
+    color: #333;
+    background-color: #fffef9;
+}
+
+.head {
+    margin-bottom: 30px;
+}
+
+.head h1 {
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    letter-spacing: 0.18em;
+}
+
+.head h1 a {
+    color: #fff;
+}
+
+.head h1 a:hover, .hover h1 a:focus, .hover h1 a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+.head ul {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.head_link {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.head_link:hover, .head_link:active {
+    color: rgba(255,255,255,0.9);
+}
+
+.margin-30 {
+    margin-top: 30px !important;
+}
+
+.margin-10 {
+    margin-bottom: 10px !important;
+}
+
+.mb-3 {
+    margin-bottom: 0.2rem !important;
+}
+
+.text-small {
+    font-size: 13px;
+}
+
+.table a {
+    color: #333;
+}
+
+.sidebar h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+footer {
+    margin-top: 70px;
+}
+
+footer p {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+label, #contact {
+    margin-top: 15px;
+}

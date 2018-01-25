@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}About us {{ block.super }} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <h1 class="text-center">About us</h1>
+            <p class="text-center">
+                Cryptonews is a website that gathers news from respected cryptocurrency blogs and centrelizes them
+                in one place so you can always keep yourself 100% informed in seconds.
+                <br><br>
+                We hope you enjoy it.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{{ block.super }}
+{% endblock %}

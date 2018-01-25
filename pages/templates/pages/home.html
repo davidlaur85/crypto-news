@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}News {{ block.super }}{% endblock %}
+
+{% block content %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body ht-tm-superspecialcardcheat">
+
+
+                  <div class="ht-tm-element input-group mb-3">
+                    <input class="form-control" placeholder="Search news..." aria-label="search news" aria-describedby="basic-addon2" type="text">
+                    <div class="input-group-append">
+                      <button class="btn btn-danger" type="button">Search!</button>
+                    </div>
+                  </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="container margin-30">
+    <div class="row">
+        <div class="col-sm-9 news">
+            <table class="table table-striped ht-tm-element">
+            <tbody>
+                <div class="infinite-container">
+                {% for n in news %}
+                  <div class="infinite-item">
+                      <tr>
+                        <td><a href="{{n.title_url}}" target="_blank">{{n.title}}</a></td>
+                        <td class="text-right text-small"><span class="text-muted">{{n.date_added}},</span> <a class="text-muted" href="{{n.website_url}}" target="_blank">{{n.website_name}}</a></th>
+                      </tr>
+                  </div>
+                {% endfor %}
+              </div>
+            </tbody>
+            </table>
+            
+            {% if news.has_next %}
+              <a class="infinite-more-link page-link text-danger text-center" href="?page={{ news.next_page_number }}">More</a>
+            {% endif %}
+
+        </div>
+        <div class="col-sm-3 sidebar">
+            <h3>Be our friend</h3>
+            <ul class="list-inline">
+                <li class="margin-10">
+                    <div class="fb-share-button" data-href="http://davidlaur.com" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+                </li>
+                <li>
+                    <div>
+                    <a class="twitter-share-button"
+                      href="https://twitter.com/share"
+                      data-size="large"
+                      data-text="custom share text"
+                      data-url="https://dev.twitter.com/web/tweet-button"
+                      data-hashtags="example,demo"
+                      data-via="twitterdev"
+                      data-related="twitterapi,twitter">
+                    Tweet
+                    </a>
+                    </div>
+                </li>
+            </ul>
+            <h3>Sponsors</h3>
+            <p><a href="#"><img src="https://dummyimage.com/250x200/44522c/fff" alt="sponsor"></a></p>
+            <p><a href="#"><img src="https://dummyimage.com/250x200/44522c/fff" alt="sponsor"></a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{{ block.super }}
+<script>
+  var infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0]
+  });
+</script>
+{% endblock %}
