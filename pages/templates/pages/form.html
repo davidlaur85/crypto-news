@@ -15,6 +15,10 @@
         {{ form }}
         <button id="login" class="btn btn-md btn-danger" type="submit">{{ button }}</button>
       </form>
+      {% if extra %}
+      <br>
+      <p>Don't have an account? <a class="text-danger" href="{% url 'pages:register_page' %}">Register here</a></p>
+      {% endif %}
     </div>
   </div>
 </div>

@@ -80,7 +80,8 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError("This user is no longer active")
         return super(LoginForm, self).clean(*args, **kwargs)
 
-class RegisterForm(forms.Form):
+
+class RegisterForm(forms.ModelForm):
     username = forms.CharField(
         label = "Username",
         max_length = 40,
@@ -122,6 +123,22 @@ class RegisterForm(forms.Form):
             }
         )
     )
+
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "email",
+            "password",
+            "re_password"
+        ]
+
+    def clean_re_password(self):
+        password = self.cleaned_data.get("password")
+        re_password = self.cleaned_data.get("re_password")
+        if password != re_password:
+            raise forms.ValidationError("Passwords must match")
+        return password
 
 
 class SubmitForm(forms.Form):

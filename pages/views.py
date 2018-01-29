@@ -50,6 +50,7 @@ def login_page(request):
     description = "Login to your account"
     form = LoginForm(request.POST or None)
     button = "Login"
+    extra = "default"
     if form.is_valid():
         username = form.cleaned_data["username"]
         password = form.cleaned_data["password"]
@@ -62,7 +63,8 @@ def login_page(request):
         "title": title,
         "description": description,
         "form": form,
-        "button": button
+        "button": button,
+        "extra": extra
     }
     return render( request, "pages/form.html", context )
 
@@ -70,8 +72,18 @@ def login_page(request):
 def register_page(request):
     title = "Register"
     description = "Don't have an account yet? You can create an account in less than 1 minute."
-    form = RegisterForm()
+    form = RegisterForm(request.POST or None)
     button = "Register"
+    if form.is_valid():
+        user = form.save(commit=False)
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+        user.set_password(password)
+        user.save()
+        new_user = authenticate(username=username, password=password)
+        login(request, new_user)
+        return redirect("/")
+
     context = {
         "title": title,
         "description": description,
