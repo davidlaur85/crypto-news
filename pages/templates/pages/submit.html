@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %} Submit news {{ block.super }} {% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <h1 class="text-center">Submit news</h1>
+  <p class="text-center">Do you have some interesting news from the world of cryptocurrency? Don't hesitate to share it with your community.</p>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+      <form method="POST">{% csrf_token %}
+        {{ form }}
+        <button id="login" class="btn btn-md btn-danger" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %} {{ block.super }} {% endblock %}

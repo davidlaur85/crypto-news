@@ -43,15 +43,19 @@
                 {% for n in news %}
                   <div class="infinite-item">
                       <tr>
-                        <td><a href="{{n.title_url}}" target="_blank">{{n.title}}</a></td>
-                        <td class="text-right text-small"><span class="text-muted">{{n.date_added}},</span> <a class="text-muted" href="{{n.website_url}}" target="_blank">{{n.website_name}}</a></th>
+                        <td>
+                          <a href="{{n.title_url}}" target="_blank">{{n.title}}</a>
+                          <span class="text-right text-small"><a class="text-muted" href="{{n.title_url}}" target="_blank"> | {{n.website_name}}</a></span>
+                          <br>
+                          <span class="text small text-muted">by {{ n.user }} | {{n.date_added | date:"b d, Y"}}</span>
+                        </td>
                       </tr>
                   </div>
                 {% endfor %}
               </div>
             </tbody>
             </table>
-            
+
             {% if news.has_next %}
               <a class="infinite-more-link page-link text-danger text-center" href="?page={{ news.next_page_number }}">More</a>
             {% endif %}

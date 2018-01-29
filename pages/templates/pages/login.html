@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block title %} Login {{ block.super }} {% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+  <h1 class="text-center">Login to your account</h1>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+      <form method="POST">{% csrf_token %}
+        {{ form }}
+        <button id="login" class="btn btn-md btn-danger" type="submit">Login</button>
+      </form>
+      <br>
+      <p>Don't have an account? <a href="{% url 'pages:register_page' %}" class="text-danger">Register here</a>.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block footer %} {{ block.super }} {% endblock %}

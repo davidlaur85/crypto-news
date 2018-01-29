@@ -1,5 +1,5 @@
 body {
-    font-size: 15px;
+    font-size: 16px;
     color: #333;
     background-color: #fffef9;
 }
@@ -61,6 +61,14 @@ body {
     color: #333;
 }
 
+.table th, .table td {
+  border-top: none;
+}
+
+td {
+  line-height: 1em;
+}
+
 .sidebar h3 {
     font-size: 15px;
     text-transform: uppercase;
@@ -77,6 +85,6 @@ footer p {
     padding-bottom: 0px;
 }
 
-label, #contact {
-    margin-top: 15px;
+label, #contact, #login, #register {
+    margin-top: 15px !important;
 }

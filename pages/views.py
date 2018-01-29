@@ -1,30 +1,83 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import (
+    authenticate,
+    get_user_model,
+    login,
+    logout
+    )
 
 from .models import NewsInfo
-from .forms import ContactForm
+from .forms import ContactForm, LoginForm, RegisterForm, SubmitForm
 
 # Create your views here.
 def home_page(request):
     news_list = NewsInfo.objects.all()
-    page = request.GET.get('page', 1)
-    paginator = Paginator(news_list, 2)
+    page = request.GET.get( "page", 1 )
+    paginator = Paginator( news_list, 2 )
     try:
         news = paginator.page(page)
     except PageNotAnInteger:
-        news = paginator.page(1)
+        news = paginator.page( 1 )
     except EmptyPage:
-        news = paginator.page(paginator.num_pages)
-    return render(request, 'pages/home.html', {'news':news})
+        news = paginator.page( paginator.num_pages )
+    return render( request, "pages/home.html", { "news":news } )
+
 
 def about_page(request):
     context = {}
-    return render(request, 'pages/about.html', context)
+    return render( request, "pages/about.html", context )
+
 
 def contact_page(request):
     form = ContactForm()
-    context = {'form':form}
-    return render(request, 'pages/contact.html', context)
+    context = { "form": form }
+    return render( request, "pages/contact.html", context )
+
 
 def login_page(request):
-    return render(request, '', context)
+    next_page = request.GET.get("next")
+    form = LoginForm(request.POST or None)
+    if form.is_valid():
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        if next_page:
+            return redirect(next_page)
+        return redirect("/")
+    context = { "form": form }
+    return render( request, "pages/login.html", context )
+
+
+def register_page(request):
+    form = RegisterForm()
+    context = { "form": form }
+    return render( request, "pages/register.html", context )
+
+
+@login_required(login_url="/login/")
+def submit_page(request):
+    if request.method == "POST":
+        form = SubmitForm(request.POST or None)
+        if form.is_valid():
+            news = NewsInfo()
+            news.title = form.cleaned_data["title"]
+            news.title_url = form.cleaned_data["url"]
+            news.user = request.user
+            website_name = str(news.title_url)
+            to_remove = ["http://", "https://", "www."]
+            for word in to_remove:
+                if word in website_name:
+                    website_name = website_name.replace(word, "")
+            website_name = website_name.split("/")
+            news.website_name = website_name[0]
+            news.save()
+            print(website_name[0])
+            return redirect("/")
+
+    else:
+        form = SubmitForm()
+        context = { "form": form }
+        return render( request, "pages/submit.html", context )
