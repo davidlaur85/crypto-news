@@ -31,14 +31,25 @@ def about_page(request):
 
 
 def contact_page(request):
+    title = "Contact us"
+    description = "If you have any questions please don't hesitate to contact us."
     form = ContactForm()
-    context = { "form": form }
-    return render( request, "pages/contact.html", context )
+    button = "Submit"
+    context = {
+        "title": title,
+        "description": description,
+        "form": form,
+        "button": button
+    }
+    return render( request, "pages/form.html", context )
 
 
 def login_page(request):
     next_page = request.GET.get("next")
+    title = "Login"
+    description = "Login to your account"
     form = LoginForm(request.POST or None)
+    button = "Login"
     if form.is_valid():
         username = form.cleaned_data["username"]
         password = form.cleaned_data["password"]
@@ -47,14 +58,32 @@ def login_page(request):
         if next_page:
             return redirect(next_page)
         return redirect("/")
-    context = { "form": form }
-    return render( request, "pages/login.html", context )
+    context = {
+        "title": title,
+        "description": description,
+        "form": form,
+        "button": button
+    }
+    return render( request, "pages/form.html", context )
 
 
 def register_page(request):
+    title = "Register"
+    description = "Don't have an account yet? You can create an account in less than 1 minute."
     form = RegisterForm()
-    context = { "form": form }
-    return render( request, "pages/register.html", context )
+    button = "Register"
+    context = {
+        "title": title,
+        "description": description,
+        "form": form,
+        "button": button
+    }
+    return render( request, "pages/form.html", context )
+
+
+def logout_page(request):
+    logout(request)
+    return redirect("/")
 
 
 @login_required(login_url="/login/")
@@ -78,6 +107,14 @@ def submit_page(request):
             return redirect("/")
 
     else:
+        title = "Submit news"
+        description = "Do you have some interesting news from the world of cryptocurrency? Don't hesitate to share it with your community."
         form = SubmitForm()
-        context = { "form": form }
-        return render( request, "pages/submit.html", context )
+        button = "Submit"
+        context = {
+            "title": title,
+            "description": description,
+            "form": form,
+            "button": button
+        }
+        return render( request, "pages/form.html", context )

@@ -22,7 +22,11 @@
         <ul class="text-center list-inline">
             <li class="list-inline-item"><a class="head_link" href="{% url 'pages:home_page' %}">News</a></li>
             <li class="list-inline-item"><a class="head_link" href="{% url 'pages:submit_page' %}">Submit</a></li>
+        {% if user.is_authenticated %}
+            <li class="list-inline-item"><a class="head_link" href="{% url 'pages:logout_page' %}">Logout</a></li>
+        {% else %}
             <li class="list-inline-item"><a class="head_link" href="{% url 'pages:login_page' %}">Login</a></li>
+        {% endif %}
         </ul>
     </div>
 
