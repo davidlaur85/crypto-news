@@ -45,9 +45,9 @@
                       <tr>
                         <td>
                           <a href="{{n.title_url}}" target="_blank">{{n.title}}</a>
-                          <span class="text-right text-small"><a class="text-muted" href="{{n.title_url}}" target="_blank"> | {{n.website_name}}</a></span>
+                          <span class="text-right text-small"><a class="text-muted" href="{{n.title_url}}" target="_blank"> | <a href="/filter-source/{{ n.website_name }}">{{ n.website_name }}</a></a></span>
                           <br>
-                          <span class="text small text-muted">by {{ n.user }} | {{n.date_added | date:"b d, Y"}}</span>
+                          <span class="text small text-muted">by <a href="/filter-name/{{ n.user }}">{{ n.user }}</a> | {{n.date_added | date:"b d, Y"}}</span>
                         </td>
                       </tr>
                   </div>

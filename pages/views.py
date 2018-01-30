@@ -44,6 +44,32 @@ def contact_page(request):
     return render( request, "pages/form.html", context )
 
 
+def user_news_page(request, name):
+    news_list = NewsInfo.objects.filter(user__icontains=name)
+    page = request.GET.get( "page", 1 )
+    paginator = Paginator( news_list, 2 )
+    try:
+        news = paginator.page(page)
+    except PageNotAnInteger:
+        news = paginator.page( 1 )
+    except EmptyPage:
+        news = paginator.page( paginator.num_pages )
+    return render( request, "pages/home.html", { "news":news } )
+
+
+def source_news_page(request, source):
+    news_list = NewsInfo.objects.filter(website_name__icontains=source)
+    page = request.GET.get( "page", 1 )
+    paginator = Paginator( news_list, 2 )
+    try:
+        news = paginator.page(page)
+    except PageNotAnInteger:
+        news = paginator.page( 1 )
+    except EmptyPage:
+        news = paginator.page( paginator.num_pages )
+    return render( request, "pages/home.html", { "news":news } )
+
+
 def login_page(request):
     next_page = request.GET.get("next")
     title = "Login"
