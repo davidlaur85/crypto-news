@@ -18,14 +18,14 @@
             <div class="card">
                 <div class="card-body ht-tm-superspecialcardcheat">
 
-
+                <form method="GET" action="/">
                   <div class="ht-tm-element input-group mb-3">
-                    <input class="form-control" placeholder="Search news..." aria-label="search news" aria-describedby="basic-addon2" type="text">
+                    <input class="form-control" name="q" value="{{ request.GET.q }}" placeholder="Search news..." aria-label="search news" aria-describedby="basic-addon2" type="text">
                     <div class="input-group-append">
-                      <button class="btn btn-danger" type="button">Search!</button>
+                      <button class="btn btn-danger" type="search">Search!</button>
                     </div>
                   </div>
-
+                </form>
 
                 </div>
             </div>
@@ -57,7 +57,7 @@
             </table>
 
             {% if news.has_next %}
-              <a class="infinite-more-link page-link text-danger text-center" href="?page={{ news.next_page_number }}">More</a>
+              <a class="infinite-more-link page-link text-danger text-center" href="?page={{ news.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">More</a>
             {% endif %}
 
         </div>

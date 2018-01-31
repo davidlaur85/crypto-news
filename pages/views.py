@@ -1,12 +1,13 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import (
     authenticate,
     get_user_model,
     login,
     logout
     )
+from django.contrib.auth.decorators import login_required
 
 from .models import NewsInfo
 from .forms import ContactForm, LoginForm, RegisterForm, SubmitForm
@@ -14,6 +15,9 @@ from .forms import ContactForm, LoginForm, RegisterForm, SubmitForm
 # Create your views here.
 def home_page(request):
     news_list = NewsInfo.objects.all()
+    query = request.GET.get("q")
+    if query:
+        news_list = NewsInfo.objects.filter(title__icontains=query)
     page = request.GET.get( "page", 1 )
     paginator = Paginator( news_list, 2 )
     try:
@@ -68,6 +72,23 @@ def source_news_page(request, source):
     except EmptyPage:
         news = paginator.page( paginator.num_pages )
     return render( request, "pages/home.html", { "news":news } )
+
+
+def search_page(request):
+    query = request.GET.get("q")
+    if query:
+        news_list = NewsInfo.objects.filter(title__icontains=query)
+        page = request.GET.get( "page", 1 )
+        paginator = Paginator( news_list, 2 )
+        try:
+            news = paginator.page(page)
+        except PageNotAnInteger:
+            news = paginator.page( 1 )
+        except EmptyPage:
+            news = paginator.page( paginator.num_pages )
+        return render( request, "pages/home.html", { "news":news } )
+    else:
+        return redirect("/")
 
 
 def login_page(request):
